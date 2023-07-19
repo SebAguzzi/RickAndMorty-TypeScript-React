@@ -6,7 +6,7 @@ export const HomePage: React.FC = () => {
     <Container sx={{ mt: 9 }} maxWidth="xl">
       <Button fullWidth variant="contained">
         Estamos en home
-        </Button>
+      </Button>
     </Container>
   );
 };
