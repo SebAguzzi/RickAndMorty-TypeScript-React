@@ -1,7 +1,30 @@
 import React from "react";
-import { AppBar, Box, Button, Container, Grid, Stack, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Badge,
+  Box,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { CartComponent } from "./Cart";
 
 export const NavBar: React.FC<{}> = () => {
+  const navigate = useNavigate();
+  const items = useAppSelector((state) => state.cartReducer);
+  const [open, setOpen] = React.useState<boolean>(false);
+
+  const handleStateViewDrawer = () => {
+    setOpen((state) => !state);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed">
@@ -18,14 +41,28 @@ export const NavBar: React.FC<{}> = () => {
               </Grid>
               <Grid item>
                 <Stack direction="row" spacing={2}>
-                <Button variant="contained">Login</Button>
-                <Button variant="outlined">Register</Button>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleStateViewDrawer()}
+                  >
+                    <Badge color="error" badgeContent={items.length}>
+                      <ShoppingCartOutlinedIcon />
+                    </Badge>
+                  </IconButton>
+                  <Button variant="contained" onClick={() => navigate("login")}>
+                    Login
+                  </Button>
+                  <Button variant="outlined">Register</Button>
                 </Stack>
               </Grid>
             </Grid>
           </Container>
         </Toolbar>
       </AppBar>
+      <CartComponent
+        open={open}
+        handleStateViewDrawer={handleStateViewDrawer}
+      />
     </Box>
   );
 };

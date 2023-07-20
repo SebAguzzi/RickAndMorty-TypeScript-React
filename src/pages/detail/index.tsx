@@ -13,8 +13,8 @@ import {
 } from "@mui/material";
 
 export const Detail: React.FC = () => {
-  const { id } = useParams();
 
+  const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
   const [character, setCharacter] = useState<ICharacter | null>(null);
 
@@ -26,7 +26,8 @@ export const Detail: React.FC = () => {
         setLoading(false);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [id]);
+
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -73,6 +74,7 @@ export const Detail: React.FC = () => {
               <img
                 src={character?.image}
                 style={{ width: "100%", borderRadius: "0.5em" }}
+                alt=""
               />
             </Grid>
           </Grid>
