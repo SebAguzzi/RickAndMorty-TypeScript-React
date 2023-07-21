@@ -21,8 +21,8 @@ interface CardHorizontalComponentProps {
 export const HorizontalCardComponent: React.FC<
   CardHorizontalComponentProps
 > = ({ id, image, name }) => {
-  const dispatch = useAppDispatch();
 
+  const dispatch = useAppDispatch();
   const handleRemoveToCart = () => {
     dispatch(removeToCart({ id }));
   };

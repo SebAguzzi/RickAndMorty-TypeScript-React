@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 // La etiqueta suspense sirve para que el componente
 // no se renderice hasta que se cargue el contenido
+
 function App() {
   return (
     <NotificationProvider>

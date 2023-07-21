@@ -12,14 +12,22 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { CartComponent } from "./Cart";
+import { logout } from "../redux/slices/auth.slice";
 
 export const NavBar: React.FC<{}> = () => {
   const navigate = useNavigate();
+  const { isAuth } = useAppSelector((state) => state.authReducer);
   const items = useAppSelector((state) => state.cartReducer);
   const [open, setOpen] = React.useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+  const handlerLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   const handleStateViewDrawer = () => {
     setOpen((state) => !state);
@@ -40,20 +48,27 @@ export const NavBar: React.FC<{}> = () => {
                 <Typography>SebAguzzi</Typography>
               </Grid>
               <Grid item>
-                <Stack direction="row" spacing={2}>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleStateViewDrawer()}
-                  >
-                    <Badge color="error" badgeContent={items.length}>
-                      <ShoppingCartOutlinedIcon />
-                    </Badge>
-                  </IconButton>
-                  <Button variant="contained" onClick={() => navigate("login")}>
-                    Login
-                  </Button>
-                  <Button variant="outlined">Register</Button>
-                </Stack>
+                {isAuth ? (
+                  <Button variant="contained" onClick={handlerLogout}>Logout</Button>
+                ) : (
+                  <Stack direction="row" spacing={2}>
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleStateViewDrawer()}
+                    >
+                      <Badge color="error" badgeContent={items.length}>
+                        <ShoppingCartOutlinedIcon />
+                      </Badge>
+                    </IconButton>
+                    <Button
+                      variant="contained"
+                      onClick={() => navigate("login")}
+                    >
+                      Login
+                    </Button>
+                    <Button variant="outlined">Register</Button>
+                  </Stack>
+                )}
               </Grid>
             </Grid>
           </Container>
