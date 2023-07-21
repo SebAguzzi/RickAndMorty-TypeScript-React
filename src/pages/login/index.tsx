@@ -18,7 +18,7 @@ type LoginType = {
   password: string;
 };
 
-export const LoginPage: React.FC<{}> = () => {
+const LoginPage: React.FC<{}> = () => {
   const { getSuccess } = useNotification();
   const formik = useFormik<LoginType>({
     initialValues: {
@@ -26,7 +26,7 @@ export const LoginPage: React.FC<{}> = () => {
       password: "",
     },
     validationSchema: LoginValidate,
-    onSubmit: (values) => {
+    onSubmit: (values: LoginType) => {
       getSuccess(JSON.stringify(values));
     },
   });
@@ -90,3 +90,5 @@ export const LoginPage: React.FC<{}> = () => {
     </Container>
   );
 };
+
+export default LoginPage;

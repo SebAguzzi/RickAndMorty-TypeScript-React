@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 
-export const Detail: React.FC = () => {
+const Detail: React.FC = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
@@ -83,3 +83,5 @@ export const Detail: React.FC = () => {
     </Box>
   );
 };
+
+export default Detail;
