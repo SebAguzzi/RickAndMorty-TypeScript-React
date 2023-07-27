@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import {
   Container,
   Box,
@@ -15,6 +14,7 @@ import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { login } from "../../redux/slices/auth.slice";
 import { Navigate, useNavigate } from "react-router-dom";
+import { authThunk } from "../../redux/thunks/auth.thunk";
 
 type LoginType = {
   username: string;
@@ -22,10 +22,12 @@ type LoginType = {
 };
 
 const LoginPage: React.FC<{}> = () => {
+  // user: seba.aguzzi@gmail.com
+  // pass: Sebas12345
   const { getSuccess } = useNotification();
   const { isAuth } = useAppSelector((state) => state.authReducer);
-  const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const formik = useFormik<LoginType>({
     initialValues: {
       username: "",
@@ -33,13 +35,15 @@ const LoginPage: React.FC<{}> = () => {
     },
     validationSchema: LoginValidate,
     onSubmit: (values: LoginType) => {
-      dispatch(login())
-      navigate('/')
-      getSuccess(JSON.stringify(values));
+      dispatch(authThunk(values));
+      navigate("/");
+      //getSuccess(JSON.stringify(values));
     },
   });
 
-  return isAuth ? <Navigate to='/' replace /> : (
+  return isAuth ? (
+    <Navigate to="/" replace />
+  ) : (
     <Container maxWidth="sm">
       <Grid
         container
@@ -50,8 +54,8 @@ const LoginPage: React.FC<{}> = () => {
       >
         <Grid item>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
-            <Typography sx={{ mt: 1, mb: 1 }} variant="h4">
-              Iniciar sesión
+            <Typography sx={{ mt: 1, mb: 1 }} variant="h4" align="center">
+              Login
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
@@ -89,7 +93,7 @@ const LoginPage: React.FC<{}> = () => {
                 variant="contained"
                 sx={{ mt: 1.5, mb: 3 }}
               >
-                Iniciar sesión
+                Login
               </Button>
             </Box>
           </Paper>
