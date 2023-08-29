@@ -16,15 +16,18 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { CartComponent } from "./Cart";
 import { logout } from "../redux/slices/auth.slice";
+import { useCookies } from "react-cookie";
 
 export const NavBar: React.FC<{}> = () => {
   const navigate = useNavigate();
+  const [,, remove] = useCookies();
   const items = useAppSelector((state) => state.cartReducer);
   const [open, setOpen] = React.useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const handlerLogout = () => {
     dispatch(logout());
+    remove("accessToken");
     navigate("/login");
   };
 
