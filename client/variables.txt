@@ -1,3 +1,0 @@
-VERCEL_PROJECT_NAME=sebaguzzi-rym-typescript
-VERCEL_TOKEN=AokLkCQpJCZQIkAqo0wEcTA1
-VERCEL_SCOPE=sebaguzzi
