@@ -8,35 +8,35 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { LoginValidate } from "../../utils/validateForm";
+import { RegisterValidate } from "../../utils/validateForm";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
-import { authThunk } from "../../redux/thunks/auth.thunk";
+import { registerUser, authThunk } from "../../redux/thunks/auth.thunk"; 
 
-type LoginType = {
+type RegisterType = {
   username: string;
   password: string;
 };
 
-const LoginPage: React.FC<{}> = () => {
-  
-  const { isAuth } = useAppSelector((state) => state.authReducer);
+const RegisterPage: React.FC<{}> = () => {
+
+  const { isRegistered } = useAppSelector((state) => state.registerReducer);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const formik = useFormik<LoginType>({
+  const formik = useFormik<RegisterType>({
     initialValues: {
-      username: "",
-      password: "",
+        username: "",
+        password: "",
     },
-    validationSchema: LoginValidate,
-    onSubmit: (values: LoginType) => {
-      dispatch(authThunk(values));
-      navigate("/");
+    validationSchema: RegisterValidate,
+    onSubmit: (values: RegisterType) => {
+        dispatch(registerUser(values));
+        navigate("/");
     },
   });
 
-  return isAuth ? (
+  return isRegistered ? (
     <Navigate to="/" replace />
   ) : (
     <Container maxWidth="sm">
@@ -50,15 +50,15 @@ const LoginPage: React.FC<{}> = () => {
         <Grid item>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4" align="center">
-              Login
+              Registro
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"
                 margin="normal"
-                type="text"
+                type="email"
                 fullWidth
-                label="Email"
+                label="Correo Electrónico"
                 sx={{ mt: 2, mb: 1.5 }}
                 value={formik.values.username}
                 onChange={formik.handleChange}
@@ -88,7 +88,7 @@ const LoginPage: React.FC<{}> = () => {
                 variant="contained"
                 sx={{ mt: 1.5, mb: 3 }}
               >
-                Login
+                Registrarse
               </Button>
             </Box>
           </Paper>
@@ -98,4 +98,4 @@ const LoginPage: React.FC<{}> = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Container,
-  Button,
   Box,
   CircularProgress,
   Pagination,
@@ -39,9 +38,6 @@ export const HomePage: React.FC = () => {
 
   return (
     <Container sx={{ mt: 9 }} maxWidth="lg">
-      <Button fullWidth variant="contained">
-        Estamos en home
-      </Button>
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <CircularProgress />

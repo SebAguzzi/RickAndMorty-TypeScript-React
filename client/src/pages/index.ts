@@ -7,4 +7,5 @@ export { HomePage } from './home';
 // Lazy load permite agilizar la carga de ciertos componentes !!!!!!!
 
 export const LoginPage = React.lazy(() => import('./login'))
+export const RegisterPage = React.lazy(() => import('./register'))
 export const Detail = React.lazy(() => import('./detail'))
