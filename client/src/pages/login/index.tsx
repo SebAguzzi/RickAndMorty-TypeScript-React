@@ -22,7 +22,6 @@ type LoginType = {
 const LoginPage: React.FC<{}> = () => {
   
   const { isAuth } = useAppSelector((state) => state.authReducer);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const formik = useFormik<LoginType>({
     initialValues: {
@@ -32,7 +31,6 @@ const LoginPage: React.FC<{}> = () => {
     validationSchema: LoginValidate,
     onSubmit: (values: LoginType) => {
       dispatch(authThunk(values));
-      navigate("/");
     },
   });
 
