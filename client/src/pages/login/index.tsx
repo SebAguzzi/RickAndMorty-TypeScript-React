@@ -20,9 +20,10 @@ type LoginType = {
 };
 
 const LoginPage: React.FC<{}> = () => {
-  
   const { isAuth } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const formik = useFormik<LoginType>({
     initialValues: {
       username: "",
@@ -33,6 +34,10 @@ const LoginPage: React.FC<{}> = () => {
       dispatch(authThunk(values));
     },
   });
+
+  const handleRegisterClick = () => {
+    navigate("/register");
+  };
 
   return isAuth ? (
     <Navigate to="/" replace />
@@ -84,9 +89,27 @@ const LoginPage: React.FC<{}> = () => {
                 fullWidth
                 type="submit"
                 variant="contained"
-                sx={{ mt: 1.5, mb: 3 }}
+                sx={{ mt: 1.5, mb: 1.5, fontWeight: "bold", fontSize: "16px" }}
               >
                 Login
+              </Button>
+
+              <div
+                style={{
+                  width: "98%", // Ancho del 50% (puedes ajustarlo)
+                  height: "1px",
+                  backgroundColor: "#B0B0B0", // Un color más claro (ajusta el color)
+                  margin: "10px auto", // Margen vertical 10px y centrado horizontalmente
+                }}
+              />
+
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={handleRegisterClick}
+                sx={{ mt: 1.5, mb: 1.5, fontWeight: "bold", fontSize: "16px" }}
+              >
+                Create new account
               </Button>
             </Box>
           </Paper>

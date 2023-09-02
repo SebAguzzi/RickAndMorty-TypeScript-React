@@ -49,7 +49,7 @@ const RegisterPage: React.FC<{}> = () => {
         <Grid item>
           <Paper sx={{ padding: "1.2em", borderRadius: "0.5em" }}>
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4" align="center">
-              Registro
+              Register
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
@@ -57,7 +57,7 @@ const RegisterPage: React.FC<{}> = () => {
                 margin="normal"
                 type="email"
                 fullWidth
-                label="Correo Electrónico"
+                label="Email"
                 sx={{ mt: 2, mb: 1.5 }}
                 value={formik.values.username}
                 onChange={formik.handleChange}
@@ -85,9 +85,9 @@ const RegisterPage: React.FC<{}> = () => {
                 fullWidth
                 type="submit"
                 variant="contained"
-                sx={{ mt: 1.5, mb: 3 }}
+                sx={{ mt: 1.5, mb: 1.5, fontWeight: 'bold', fontSize: '16px' }}
               >
-                Registrarse
+                Create account
               </Button>
             </Box>
           </Paper>
