@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as auth from "firebase/auth";
 import { authFirebase } from "../../config/firebase";
+import axios from "axios";
+
 
 export const registerUser = createAsyncThunk(
   "firebase/register",
@@ -18,6 +20,12 @@ export const registerUser = createAsyncThunk(
       const { email, uid } = authGenerate.user;
       const { token: accessToken, expirationTime } =
         await authGenerate.user.getIdTokenResult();
+
+        const response = await axios.post('/auth/register', {
+          username: email, 
+          password, 
+        });
+        
       return {
         accessToken,
         expirationTime,

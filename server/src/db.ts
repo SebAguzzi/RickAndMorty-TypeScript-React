@@ -15,6 +15,7 @@ if (!dbName || !dbUser || !dbPassword) {
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: 'localhost',
   dialect: 'postgres',
+  port: 5432,
 });
 
 export default sequelize;

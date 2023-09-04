@@ -11,27 +11,28 @@ import {
 import { RegisterValidate } from "../../utils/validateForm";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Navigate, useNavigate } from "react-router-dom";
-import { registerUser, authThunk } from "../../redux/thunks/auth.thunk"; 
+import { Navigate } from "react-router-dom";
+import { registerUser, authThunk } from "../../redux/thunks/auth.thunk";
 
 type RegisterType = {
   username: string;
   password: string;
+  confirmPassword: string;
 };
 
 const RegisterPage: React.FC<{}> = () => {
-
   const { isAuth } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
   const formik = useFormik<RegisterType>({
     initialValues: {
-        username: "",
-        password: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
     validationSchema: RegisterValidate,
     onSubmit: async (values: RegisterType) => {
-        await dispatch(registerUser(values));
-        await dispatch(authThunk(values));
+      await dispatch(registerUser(values));
+      await dispatch(authThunk(values));
     },
   });
 
@@ -81,11 +82,30 @@ const RegisterPage: React.FC<{}> = () => {
                 helperText={formik.touched.password && formik.errors.password}
               />
 
+              <TextField
+                name="confirmPassword"
+                margin="normal"
+                type="password" // Tipo de campo contraseña
+                fullWidth
+                label="Confirm Password" // Etiqueta para confirmar la contraseña
+                sx={{ mt: 1.5, mb: 1.5 }}
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
+              />
+
               <Button
                 fullWidth
                 type="submit"
                 variant="contained"
-                sx={{ mt: 1.5, mb: 1.5, fontWeight: 'bold', fontSize: '16px' }}
+                sx={{ mt: 1.5, mb: 1.5, fontWeight: "bold", fontSize: "16px" }}
               >
                 Create account
               </Button>
