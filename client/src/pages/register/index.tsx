@@ -23,6 +23,11 @@ type RegisterType = {
 const RegisterPage: React.FC<{}> = () => {
   const { isAuth } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
+  const [registrationError, setRegistrationError] = React.useState<
+    string | null
+  >(null);
+  console.log("error", registrationError);
+
   const formik = useFormik<RegisterType>({
     initialValues: {
       username: "",
@@ -30,15 +35,17 @@ const RegisterPage: React.FC<{}> = () => {
       confirmPassword: "",
     },
     validationSchema: RegisterValidate,
-    onSubmit: async (values: RegisterType) => {
-      await dispatch(registerUser(values));
-      await dispatch(authThunk(values));
+    onSubmit: async (values: RegisterType) => {   
+          await dispatch(registerUser(values));
+          await dispatch(authThunk(values));
     },
   });
 
-  return isAuth ? (
-    <Navigate to="/" replace />
-  ) : (
+  return (
+    // isAuth ? (
+    //   <Navigate to="/" replace />
+    // ) :
+    // (
     <Container maxWidth="sm">
       <Grid
         container

@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node-dev src/server.ts",
+    "start": "node build/server.js",
     "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,11 +20,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "firebase": "^10.3.1",
+    "firebase-admin": "^11.10.1",
     "pg": "^8.11.3",
     "sequelize": "^6.32.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   }
 }

@@ -11,30 +11,14 @@ export const registerUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const authGenerate = await auth.createUserWithEmailAndPassword(
-        authFirebase,
-        username, 
-        password  
-        );
-        
-      const { email, uid } = authGenerate.user;
-      const { token: accessToken, expirationTime } =
-        await authGenerate.user.getIdTokenResult();
 
-        const response = await axios.post('/auth/register', {
-          username: email, 
-          password, 
+        const response = await axios.post('http://localhost:3001/auth/register', {
+          username: username, 
+          password: password, 
         });
-        
-      return {
-        accessToken,
-        expirationTime,
-        userData: {
-          email,
-          uid,
-        },
-      };
+
     } catch (error) {
+      console.log('errorauththunk', error)
       return rejectWithValue(error);
     }
   }
