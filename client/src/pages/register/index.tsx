@@ -23,10 +23,10 @@ type RegisterType = {
 const RegisterPage: React.FC<{}> = () => {
   const { isAuth } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
-  const [registrationError, setRegistrationError] = React.useState<
-    string | null
-  >(null);
-  console.log("error", registrationError);
+  // const [registrationError, setRegistrationError] = React.useState<
+  //   string | null
+  // >(null);
+  // console.log("error", registrationError);
 
   const formik = useFormik<RegisterType>({
     initialValues: {

@@ -14,7 +14,7 @@ app.use(express.json());
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-  databaseURL: 'auth-react-rym.firebaseapp.com', // Reemplaza con la URL de tu proyecto Firebase
+  databaseURL: 'https://auth-react-rym.firebaseapp.com', // Reemplaza con la URL de tu proyecto Firebase
 });
 
 app.use('/auth', authRoutes);

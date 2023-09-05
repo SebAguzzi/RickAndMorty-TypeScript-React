@@ -18,7 +18,6 @@ export const registerUser = createAsyncThunk(
         });
 
     } catch (error) {
-      console.log('errorauththunk', error)
       return rejectWithValue(error);
     }
   }
