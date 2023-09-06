@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerUser } from "../thunks/auth.thunk"; // Necesitas definir esta acción asincrónica para el registro
-
+import { registerUser } from "../thunks/auth.thunk"; 
 interface RegisterState {
   isRegistered: boolean;
   error: string | null;

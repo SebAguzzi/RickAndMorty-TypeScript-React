@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import * as auth from "firebase/auth";
 import { authFirebase } from "../../config/firebase";
 import axios from "axios";
+import { useState } from "react";
 
 
 export const registerUser = createAsyncThunk(
@@ -10,6 +11,7 @@ export const registerUser = createAsyncThunk(
     { username, password }: { username: string; password: string },
     { rejectWithValue }
   ) => {
+
     try {
 
         const response = await axios.post('http://localhost:3001/auth/register', {

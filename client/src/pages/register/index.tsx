@@ -11,7 +11,7 @@ import {
 import { RegisterValidate } from "../../utils/validateForm";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { registerUser, authThunk } from "../../redux/thunks/auth.thunk";
 
 type RegisterType = {
@@ -21,12 +21,9 @@ type RegisterType = {
 };
 
 const RegisterPage: React.FC<{}> = () => {
-  const { isAuth } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
-  // const [registrationError, setRegistrationError] = React.useState<
-  //   string | null
-  // >(null);
-  // console.log("error", registrationError);
+  const navigate = useNavigate();
+  const { error } = useAppSelector((state) => state.registerReducer);
 
   const formik = useFormik<RegisterType>({
     initialValues: {
@@ -36,16 +33,22 @@ const RegisterPage: React.FC<{}> = () => {
     },
     validationSchema: RegisterValidate,
     onSubmit: async (values: RegisterType) => {   
-          await dispatch(registerUser(values));
-          await dispatch(authThunk(values));
+      try {
+        await dispatch(registerUser(values));
+        if (error === null) {
+           navigate("/login");   
+        }        
+      } catch (error) {
+        console.log('Error al registrar usuario:', error)
+      }
     },
   });
 
+  const handleRegisterClick = () => {
+    navigate("/login");
+  };
+
   return (
-    // isAuth ? (
-    //   <Navigate to="/" replace />
-    // ) :
-    // (
     <Container maxWidth="sm">
       <Grid
         container
@@ -115,6 +118,23 @@ const RegisterPage: React.FC<{}> = () => {
                 sx={{ mt: 1.5, mb: 1.5, fontWeight: "bold", fontSize: "16px" }}
               >
                 Create account
+              </Button>
+              <div
+                style={{
+                  width: "98%", // Ancho del 50% (puedes ajustarlo)
+                  height: "1px",
+                  backgroundColor: "#B0B0B0", // Un color más claro (ajusta el color)
+                  margin: "10px auto", // Margen vertical 10px y centrado horizontalmente
+                }}
+              />
+
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={handleRegisterClick}
+                sx={{ mt: 1.5, mb: 1.5, fontWeight: "bold", fontSize: "16px" }}
+              >
+                Already have an account?
               </Button>
             </Box>
           </Paper>
