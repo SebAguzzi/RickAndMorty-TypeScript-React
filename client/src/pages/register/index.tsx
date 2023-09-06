@@ -24,6 +24,7 @@ const RegisterPage: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { error } = useAppSelector((state) => state.registerReducer);
+  const [ problem, setProblem ] = React.useState<string | null>(null);  
 
   const formik = useFormik<RegisterType>({
     initialValues: {
@@ -34,10 +35,13 @@ const RegisterPage: React.FC<{}> = () => {
     validationSchema: RegisterValidate,
     onSubmit: async (values: RegisterType) => {   
       try {
-        await dispatch(registerUser(values));
+        const { payload } = await dispatch(registerUser(values));
+        console.log('payload', payload)
         if (error === null) {
            navigate("/login");   
-        }        
+        } else {
+          setProblem(payload.response.data.msg)
+        }
       } catch (error) {
         console.log('Error al registrar usuario:', error)
       }
@@ -62,6 +66,13 @@ const RegisterPage: React.FC<{}> = () => {
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4" align="center">
               Register
             </Typography>
+
+            {problem && (
+            <Typography variant="body2" color="error" align="center" sx={{ mt: 1 }}>
+              {problem}
+            </Typography>
+          )}
+            
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"
