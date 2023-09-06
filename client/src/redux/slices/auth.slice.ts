@@ -50,6 +50,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.isAuth = false;
+      state.accessToken = null; // remove token when logout
     },
   },
   extraReducers: (builder) => {
@@ -64,7 +65,7 @@ export const authSlice = createSlice({
         ...initialState,
         loading: false,
         success: true,
-        accessToken: action.payload.accessToken,
+        accessToken: action.payload.token,
         isAuth: true,
         isExpired: false,
         userData: action.payload.userData,

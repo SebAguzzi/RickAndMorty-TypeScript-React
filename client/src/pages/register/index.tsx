@@ -25,6 +25,7 @@ const RegisterPage: React.FC<{}> = () => {
   const navigate = useNavigate();
   const { error } = useAppSelector((state) => state.registerReducer);
   const [ problem, setProblem ] = React.useState<string | null>(null);  
+  
 
   const formik = useFormik<RegisterType>({
     initialValues: {
@@ -40,7 +41,7 @@ const RegisterPage: React.FC<{}> = () => {
         if (error === null) {
            navigate("/login");   
         } else {
-          setProblem(payload.response.data.msg)
+          setProblem(payload.response.data.message)
         }
       } catch (error) {
         console.log('Error al registrar usuario:', error)

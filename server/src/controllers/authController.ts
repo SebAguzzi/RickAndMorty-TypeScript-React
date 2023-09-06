@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/User";
 import * as admin from "firebase-admin";
+import { generateJwt } from "../utils/generateJwt";
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -16,7 +17,7 @@ export const register = async (req: Request, res: Response) => {
 
     if (userRecord || existingUser) {
       return res.status(401).json({
-        msg: "Email address is already in use.",
+        message: "Email address is already in use.",
       });
     }
 
@@ -61,7 +62,9 @@ export const login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Incorrect password." });
     }
 
-    return res.status(200).json({ message: "Login successful." });
+    const token = generateJwt(existingUser.id)
+
+    return res.status(200).json({ message: "Login successful.", token });
   } catch (error) {
     console.error("Login error:", error);
     return res

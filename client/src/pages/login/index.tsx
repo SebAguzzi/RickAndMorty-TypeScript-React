@@ -20,7 +20,7 @@ type LoginType = {
 };
 
 const LoginPage: React.FC<{}> = () => {
-  const { isAuth } = useAppSelector((state) => state.authReducer);
+  const { accessToken } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const LoginPage: React.FC<{}> = () => {
     navigate("/register");
   };
 
-  return isAuth ? (
+  return accessToken ? (
     <Navigate to="/" replace />
   ) : (
     <Container maxWidth="sm">
