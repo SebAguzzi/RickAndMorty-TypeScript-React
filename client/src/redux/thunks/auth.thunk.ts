@@ -1,6 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import * as auth from "firebase/auth";
-import { authFirebase } from "../../config/firebase";
 import axios from "axios";
 
 
@@ -16,6 +14,7 @@ export const registerUser = createAsyncThunk(
           password: password, 
         });
 
+        console.log('response', response.data);
         return response.data;
 
     } catch (error) {

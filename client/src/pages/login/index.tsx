@@ -23,6 +23,7 @@ const LoginPage: React.FC<{}> = () => {
   const { accessToken } = useAppSelector((state) => state.authReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [ problem, setProblem ] = React.useState<string | null>(null);
 
   const formik = useFormik<LoginType>({
     initialValues: {
@@ -30,8 +31,14 @@ const LoginPage: React.FC<{}> = () => {
       password: "",
     },
     validationSchema: LoginValidate,
-    onSubmit: (values: LoginType) => {
-      dispatch(authThunk(values));
+    onSubmit: async (values: LoginType) => {
+      setProblem("");      
+      const { payload } = await dispatch(authThunk(values));
+      if (payload.message !== 'Login successful.') {
+        setProblem(payload.response.data?.message);
+      } else {
+        navigate("/");
+      }
     },
   });
 
@@ -55,6 +62,11 @@ const LoginPage: React.FC<{}> = () => {
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4" align="center">
               Login
             </Typography>
+            {problem && (
+            <Typography variant="body2" color="error" align="center" sx={{ mt: 1 }}>
+              {problem}
+            </Typography>
+          )}
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"

@@ -11,8 +11,9 @@ import {
 import { RegisterValidate } from "../../utils/validateForm";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { useNavigate } from "react-router-dom";
-import { registerUser, authThunk } from "../../redux/thunks/auth.thunk";
+import { Navigate, useNavigate } from "react-router-dom";
+import { registerUser } from "../../redux/thunks/auth.thunk";
+import { resetRegistration } from "../../redux/slices/register.slice";
 
 type RegisterType = {
   username: string;
@@ -23,8 +24,8 @@ type RegisterType = {
 const RegisterPage: React.FC<{}> = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { error } = useAppSelector((state) => state.registerReducer);
   const [ problem, setProblem ] = React.useState<string | null>(null);  
+  const { accessToken } = useAppSelector((state) => state.authReducer);
   
 
   const formik = useFormik<RegisterType>({
@@ -35,16 +36,13 @@ const RegisterPage: React.FC<{}> = () => {
     },
     validationSchema: RegisterValidate,
     onSubmit: async (values: RegisterType) => {   
-      try {
-        const { payload } = await dispatch(registerUser(values));
-        console.log('payload', payload)
-        if (error === null) {
-           navigate("/login");   
-        } else {
-          setProblem(payload.response.data.message)
-        }
-      } catch (error) {
-        console.log('Error al registrar usuario:', error)
+      setProblem("");
+      resetRegistration();
+      const { payload } = await dispatch(registerUser(values));
+      if (payload.message !== 'Registration successful.') {
+        setProblem(payload.response.data?.message);
+      } else {
+        navigate("/login");   
       }
     },
   });
@@ -53,7 +51,9 @@ const RegisterPage: React.FC<{}> = () => {
     navigate("/login");
   };
 
-  return (
+  return accessToken ? (
+    <Navigate to="/" replace />
+  ) : (
     <Container maxWidth="sm">
       <Grid
         container
@@ -67,13 +67,11 @@ const RegisterPage: React.FC<{}> = () => {
             <Typography sx={{ mt: 1, mb: 1 }} variant="h4" align="center">
               Register
             </Typography>
-
             {problem && (
             <Typography variant="body2" color="error" align="center" sx={{ mt: 1 }}>
               {problem}
             </Typography>
-          )}
-            
+          )}            
             <Box component="form" onSubmit={formik.handleSubmit}>
               <TextField
                 name="username"
