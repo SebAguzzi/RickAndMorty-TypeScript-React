@@ -1,22 +1,29 @@
-import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-// Carga las variables de entorno desde .env
 dotenv.config();
 
 const dbName = process.env.DB_NAME;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
+const PRODUCTION = process.env.PRODUCTION;
+const DB_DEPLOY = process.env.DB_DEPLOY;
 
 if (!dbName || !dbUser || !dbPassword) {
-  throw new Error('Las variables de entorno de la base de datos no están configuradas.');
+  throw new Error(
+    "Las variables de entorno de la base de datos no están configuradas."
+  );
 }
 
-const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: 'localhost',
-  dialect: 'postgres',
-  port: 5432,
-});
+const sequelize =
+  PRODUCTION === "true"
+    ? new Sequelize(DB_DEPLOY || "", {
+        dialect: "postgres",
+      })
+    : new Sequelize(dbName, dbUser, dbPassword, {
+        host: "localhost",
+        dialect: "postgres",
+        port: 5432,
+      });
 
 export default sequelize;
-
