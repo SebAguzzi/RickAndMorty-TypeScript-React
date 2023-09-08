@@ -1,5 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
+
+
+const production = process.env.REACT_APP_PRODUCTION;
+console.log('production', production);
+const url = process.env.REACT_APP_URL_DEPLOY;
+
+const axiosInstance: AxiosInstance = axios.create({
+  baseURL: production === "true" ? url : "http://localhost:3001", 
+});
 
 
 export const registerUser = createAsyncThunk(
@@ -9,7 +18,7 @@ export const registerUser = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-        const response = await axios.post('http://localhost:3001/auth/register', {
+        const response = await axiosInstance.post('/auth/register', {
           username: username, 
           password: password, 
         });
@@ -30,7 +39,7 @@ export const authThunk = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axios.post('http://localhost:3001/auth/login', {
+      const response = await axiosInstance.post('/auth/login', {
         username: username, 
         password: password, 
       });
