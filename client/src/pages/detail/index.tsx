@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 
 const Detail: React.FC = () => {
-
   const { id } = useParams();
   const [loading, setLoading] = useState<boolean>(true);
   const [character, setCharacter] = useState<ICharacter | null>(null);
@@ -28,7 +27,6 @@ const Detail: React.FC = () => {
       .catch((err) => console.error(err));
   }, [id]);
 
-
   return (
     <Box sx={{ width: "100%" }}>
       <Container maxWidth="lg" sx={{ mt: 15 }}>
@@ -37,30 +35,24 @@ const Detail: React.FC = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <Grid sx={{ mt: 4 }} container columnSpacing={2}>
-            <Grid item xs={6}>
-              <Typography variant="h1">{character?.name}</Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h1" sx={{ fontSize: "3rem" }}>
+                {character?.name}
+              </Typography>
               <Divider />
               <Box sx={{ mt: 1, mb: 1 }}>
-                {character?.status === "Alive" ? (
-                  <Chip
-                    color="primary"
-                    variant="outlined"
-                    label={character?.status}
-                  />
-                ) : character?.status === "unknown" ? (
-                  <Chip
-                    color={"warning"}
-                    variant="outlined"
-                    label={character?.status}
-                  />
-                ) : (
-                  <Chip
-                    color={"error"}
-                    variant="outlined"
-                    label={character?.status}
-                  />
-                )}
+                <Chip
+                  color={
+                    character?.status === "Alive"
+                      ? "primary"
+                      : character?.status === "unknown"
+                      ? "warning"
+                      : "error"
+                  }
+                  variant="outlined"
+                  label={character?.status}
+                />
               </Box>
               <Divider />
               <Typography variant="h6">{character?.species}</Typography>
@@ -70,12 +62,25 @@ const Detail: React.FC = () => {
               <Typography variant="h6">{character?.origin.name}</Typography>
               <Divider />
             </Grid>
-            <Grid item xs={4}>
-              <img
-                src={character?.image}
-                style={{ width: "100%", borderRadius: "0.5em" }}
-                alt=""
-              />
+            <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
+                <img
+                  src={character?.image}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                    borderRadius: "0.5em",
+                  }}
+                  alt=""
+                />
+              </Box>
             </Grid>
           </Grid>
         )}

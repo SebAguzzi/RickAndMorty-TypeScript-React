@@ -46,17 +46,18 @@ export const CardComponent: React.FC<CardProps> = ({ image, name, id }) => {
 
   return (
     <Card>
-      <CardMedia component="img" height="" image={image} alt="Paella dish" />
+      <CardMedia component="img" height="auto" width="100%" image={image} alt="Paella dish" />
       <CardContent>
-        <Typography variant="h5" sx={{ mb: 1 }}>
+        <Typography variant="h5" sx={{ mb: 1, fontWeight: "1rem"  }}>
           {name}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ flexDirection: "column" }}>
         <Button
           fullWidth
           variant="contained"
           size="small"
+          sx={{ mb: 1 }}
           onClick={() => navigate(`/character/${id}`)}
         >
           Learn More
@@ -66,6 +67,7 @@ export const CardComponent: React.FC<CardProps> = ({ image, name, id }) => {
           variant="outlined"
           size="small"
           disabled={disabledBtn}
+          sx={{ mb: 1 }}
           onClick={handleAddToCart}
         >
           Add to cart

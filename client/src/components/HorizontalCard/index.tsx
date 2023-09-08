@@ -28,14 +28,14 @@ export const HorizontalCardComponent: React.FC<
   };
 
   return (
-    <Card sx={{ display: "flex", my: 2 }}>
+    <Card sx={{ display: "flex", my: 2, width: "100%" }}>
       <CardMedia
         component="img"
-        sx={{ width: 151 }}
+        sx={{ flex: "1", maxWidth: "50%", alignSelf: "center"  }}
         image={image}
         alt="Rick and Morty"
       />
-      <Grid container sx={{ mx: 1 }}>
+      <Grid container sx={{ flex: "2" }}>
         <Grid item xs={9}>
           <CardContent>
             <Typography variant="h4">{name}</Typography>
