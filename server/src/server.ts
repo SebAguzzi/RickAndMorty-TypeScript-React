@@ -1,10 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import authRoutes from './routes/authRoutes';
-import sequelize from './db';
-import * as admin from 'firebase-admin';
-import * as serviceAccount from '../credentialFirebase.json';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import authRoutes from "./routes/authRoutes";
+import sequelize from "./db";
+import * as admin from "firebase-admin";
+import * as serviceAccount from "../credentialFirebase.json";
+import apiRoutes from "./routes/apiRoutes";
 
 dotenv.config();
 
@@ -14,10 +15,11 @@ app.use(express.json());
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-  databaseURL: 'https://auth-react-rym.firebaseapp.com', // Reemplaza con la URL de tu proyecto Firebase
+  databaseURL: "https://auth-react-rym.firebaseapp.com", // Reemplaza con la URL de tu proyecto Firebase
 });
 
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);
+app.use("/api", apiRoutes);
 
 const PORT = process.env.PORT || 3001;
 
@@ -29,5 +31,5 @@ sequelize
     });
   })
   .catch((error) => {
-    console.error('Error al sincronizar la base de datos:', error);
+    console.error("Error al sincronizar la base de datos:", error);
   });

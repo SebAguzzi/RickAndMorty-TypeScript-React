@@ -1,15 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, { AxiosInstance } from "axios";
 
-
 const production = process.env.REACT_APP_PRODUCTION;
-console.log('production', production);
 const url = process.env.REACT_APP_URL_DEPLOY;
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: production === "true" ? url : "http://localhost:3001", 
 });
-
 
 export const registerUser = createAsyncThunk(
   "firebase/register",
@@ -47,23 +44,6 @@ export const authThunk = createAsyncThunk(
       console.log('data', response.data)
       return response.data;
 
-      // const authGenerate = await auth.signInWithEmailAndPassword(
-      //   authFirebase,
-      //   username,
-      //   password
-      // );
-
-      // const { email, uid } = authGenerate.user;
-      // const { token: accessToken, expirationTime } =
-      //   await authGenerate.user.getIdTokenResult();
-      // return {
-      //   accessToken,
-      //   expirationTime,
-      //   userData: {
-      //     email,
-      //     uid,
-      //   },
-      // };
     } catch (error) {
       return rejectWithValue(error);
     }

@@ -1,10 +1,12 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../db';
+import Cart from './Cart';
 
 class User extends Model {
   public id!: number;
   public username!: string;
   public password!: string;
+  public readonly cart?: Cart;
 }
 
 User.init(
@@ -24,5 +26,7 @@ User.init(
     modelName: 'User',
   }
 );
+
+User.hasOne(Cart, { foreignKey: 'userId' });
 
 export default User;
